@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 
-class PostController extends Controller implements HasMiddleware
+class PostController extends Controller
 {
-    public static function middleware()
+    // public static function middleware()
+    // {
+    //     return [
+    //         new Middleware('auth:sanctum', except: ['index', 'show'])
+    //     ];
+    // }
+
+    public function __construct()
     {
-        return [
-            new Middleware('auth:sanctum', except: ['index', 'show'])
-        ];
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
 
     /**
@@ -53,7 +57,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function update(Request $request, Post $post)
     {
-        Gate::authorize('modify', $post);
+        // Gate::authorize('modify', $post);
 
         $fields = $request->validate([
             'title' => 'required|max:255',
