@@ -57,7 +57,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // Gate::authorize('modify', $post);
+        Gate::authorize('modify', $post);
 
         $fields = $request->validate([
             'title' => 'required|max:255',
